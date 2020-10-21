@@ -8,8 +8,7 @@ feature1 = np.array([[148, 0, 211]], dtype=np.float128)
 feature2 = np.array([[255, 0, 0]], dtype=np.float128)
 """ Initialise class """
 neural = NeuralNet([4, 4, 4, 4])
-
-neural.train_model(0.8, 20_000)
+neural.train_model("weights/training_colours_shuffled.npy", 0.8, 20_000)
 
 colour_dict = {
     0: "Pink",

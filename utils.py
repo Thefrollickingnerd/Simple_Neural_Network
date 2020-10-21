@@ -48,9 +48,7 @@ def forward_propagation(features, thetas):
         [type]: [description]
     """
     m = np.shape(features)[0]
-    L1 = np.concatenate(
-        (np.ones((1, m), dtype=np.float128), ((features - 127.5) / 127.5).T), axis=0
-    )
+    L1 = np.concatenate((np.ones((1, m), dtype=np.float128), features.T), axis=0)
     network = dict()
     network[0] = L1
 
