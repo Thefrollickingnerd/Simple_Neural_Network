@@ -8,17 +8,14 @@ class NeuralNet:
     """A simple neural network. 
     """
 
-    def __init__(self, layers):
+    def __init__(self, layers, n_features=3, n_classes=7):
         """
         Args:
-            model_name (string): name of model
-            n_layers (int): number of hidden layers
-            n_features (int): number of features from input
-            n_nodes_hl (int): Number of nodes in hidden layers
+            layers (list) : each element is the number of nodes for that hidden layer.
         """
-        # self.n_features = 3
+        self.n_features = n_features
         self.layers = layers
-        # self.n_classes = 7
+        self.n_classes = n_classes
 
     def get_network(self):
         """Return network (nodes)
@@ -35,7 +32,7 @@ class NeuralNet:
         y = training_set[:, -1].astype(int)
         m = np.shape(x)[0]
 
-        self.thetas = create_theta_dict(self.layers)
+        self.thetas = create_theta_dict(self.layers, self.n_features, self.n_classes)
 
         self.thetas, cost_history = gradient_descent(
             learning_rate, no_epochs, self.thetas, m, x, y

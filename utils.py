@@ -5,7 +5,7 @@ from numpy.random import rand
 from numpy.random import uniform
 
 
-def create_theta_dict(layers):
+def create_theta_dict(layers, n_features, n_outnodes):
     """
     Create theta matrices inside dictionary. 
     Built on the assumption the final layer has 7 nodes. 
@@ -19,8 +19,6 @@ def create_theta_dict(layers):
     Returns:
         [dictionary]: Each value is a weights matrix
     """
-    n_features = 3
-    n_outnodes = 7
 
     n_h_layers = len(layers)
     layers_dict = {h_layer: nodes for h_layer, nodes in enumerate(layers, 1)}
