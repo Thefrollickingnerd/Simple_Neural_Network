@@ -7,7 +7,7 @@ from utils import *
 feature1 = np.array([[148, 0, 211]], dtype=np.float128)
 feature2 = np.array([[255, 0, 0]], dtype=np.float128)
 """ Initialise class """
-neural = NeuralNet(2, 4)
+neural = NeuralNet([4, 4, 4, 4])
 
 neural.train_model(0.8, 20_000)
 
@@ -21,10 +21,10 @@ colour_dict = {
     6: "Red",
 }
 
+print(f"The final cost is : {neural.current_cost}")
 print(
     f"Model prediction for [148], [0], [211] : {colour_dict[neural.predict(feature1)]}"
 )
-# print(neural.get_network())
 
 print(f"Model prediction for [255], [0], [0] : {colour_dict[neural.predict(feature2)]}")
-# print(neural.get_network())
+

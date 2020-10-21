@@ -5,31 +5,50 @@ from numpy.random import rand
 from numpy.random import uniform
 
 
-def create_theta_dict(n_h_layers, n_nodes_hl):
+def create_theta_dict(layers):
     """
     Create theta matrices inside dictionary. 
     Built on the assumption the final layer has 7 nodes. 
     set matrix elements to random value between -1 and 1.
     For n layers there are n-1 theta matrices.
+
+    Args:
+        layers (list): Each element is the no. of nodes in that respective hidden layer.
+        ([1] == one node in the first hidden layer)
+
+    Returns:
+        [dictionary]: Each value is a weights matrix
     """
     n_features = 3
     n_outnodes = 7
 
+    n_h_layers = len(layers)
+    layers_dict = {h_layer: nodes for h_layer, nodes in enumerate(layers, 1)}
+
     thetas = dict()
-    thetas[0] = uniform(-1, 1, size=(n_nodes_hl, n_features + 1)).astype(
+    thetas[0] = uniform(-1, 1, size=(layers_dict[1], n_features + 1)).astype(
         dtype=np.float128
     )
     for i in range(1, n_h_layers):
-        thetas[i] = uniform(-1, 1, size=(n_nodes_hl, n_nodes_hl + 1)).astype(
-            dtype=np.float128
-        )
-    thetas[n_h_layers] = uniform(-1, 1, size=(n_outnodes, n_nodes_hl + 1)).astype(
-        dtype=np.float128
-    )
+        thetas[i] = uniform(
+            -1, 1, size=(layers_dict[i + 1], layers_dict[i] + 1)
+        ).astype(dtype=np.float128)
+    thetas[n_h_layers] = uniform(
+        -1, 1, size=(n_outnodes, layers_dict[max(layers_dict.keys())] + 1)
+    ).astype(dtype=np.float128)
     return thetas
 
 
 def forward_propagation(features, thetas):
+    """Propagate forward through the network multiplying each layer by thetas. 
+
+    Args:
+        features (list): numerical values in a list
+        thetas (dictionary): Each value is a weights matrix
+
+    Returns:
+        [type]: [description]
+    """
     m = np.shape(features)[0]
     L1 = np.concatenate(
         (np.ones((1, m), dtype=np.float128), ((features - 127.5) / 127.5).T), axis=0
@@ -55,7 +74,7 @@ def sigmoid_grad(z):
     """Gradient of sigmoid function
 
     Args:
-        z (np array or float): [description]
+        z (np array or float)
 
     Returns:
         [np array]: gradient of sigmoid function of z where z == theta*layer.

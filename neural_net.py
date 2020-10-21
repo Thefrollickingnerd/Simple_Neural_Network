@@ -1,9 +1,6 @@
 import numpy as np
 import random
 import math
-from scipy.optimize import fmin_bfgs
-from scipy.optimize import minimize
-from scipy.optimize import fmin
 from utils import *
 
 
@@ -11,7 +8,7 @@ class NeuralNet:
     """A simple neural network. 
     """
 
-    def __init__(self, n_h_layers=2, n_nodes_hl=4):
+    def __init__(self, layers):
         """
         Args:
             model_name (string): name of model
@@ -20,8 +17,7 @@ class NeuralNet:
             n_nodes_hl (int): Number of nodes in hidden layers
         """
         # self.n_features = 3
-        self.n_h_layers = n_h_layers
-        self.n_nodes_hl = n_nodes_hl
+        self.layers = layers
         # self.n_classes = 7
 
     def get_network(self):
@@ -39,7 +35,7 @@ class NeuralNet:
         y = training_set[:, -1].astype(int)
         m = np.shape(x)[0]
 
-        self.thetas = create_theta_dict(self.n_h_layers, self.n_nodes_hl)
+        self.thetas = create_theta_dict(self.layers)
 
         self.thetas, cost_history = gradient_descent(
             learning_rate, no_epochs, self.thetas, m, x, y
