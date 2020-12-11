@@ -4,10 +4,10 @@ from utils import *
 
 
 """ Features (RGB values)"""
-feature1 = np.array([[148, 0, 211]], dtype=np.float128)
-feature2 = np.array([[255, 0, 0]], dtype=np.float128)
+try_colour = np.array([[0, 255, 128]], dtype=np.float128)  # R G B
+
 """ Initialise class """
-neural = NeuralNet([4, 4, 4, 4])
+neural = NeuralNet([2, 2])
 neural.train_model("weights/training_colours_shuffled.npy", 0.8, 20_000)
 
 colour_dict = {
@@ -21,9 +21,5 @@ colour_dict = {
 }
 
 print(f"The final cost is : {neural.current_cost}")
-print(
-    f"Model prediction for [148], [0], [211] : {colour_dict[neural.predict(feature1)]}"
-)
-
-print(f"Model prediction for [255], [0], [0] : {colour_dict[neural.predict(feature2)]}")
+print(f"Model prediction for {try_colour} : {colour_dict[neural.predict(try_colour)]}")
 
